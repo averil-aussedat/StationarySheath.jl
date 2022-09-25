@@ -15,7 +15,10 @@ Discretization of $\phi$ in a finite-dimensional space. The fixed-point iterates
   * resolution of the Poisson problem $- \lambda^2 \phi'' = n_i - ne$.
 
 This code was initiated during CEMRACS 2022 summer school.
-Authors: Michel Mehrenberger, Mehdi Badsi, Anaïs Crestetto, and Averil Prost.
+
+Authors: [Michel Mehrenberger](http://www.i2m.univ-amu.fr/perso/mehrenberg.m/), [Anaïs Crestetto](https://www.math.sciences.univ-nantes.fr/~crestetto/), [Mehdi Badsi](https://www.math.sciences.univ-nantes.fr/~badsi/), and Averil Prost.
+
+Invaluable Julia support by [Pierre Navaro](https://github.com/pnavaro).
 
 The code may be run with 
 ```bash
