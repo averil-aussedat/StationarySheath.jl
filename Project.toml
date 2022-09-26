@@ -11,6 +11,8 @@ ScatteredInterpolation = "3f865c0f-6dca-5f4d-999b-29fe1e7e3c92"
 
 [compat]
 GitHubActions = "0.1"
+DocStringExtensions = "0.9"
+Plots = "1"
 julia = "1"
 
 [extras]
