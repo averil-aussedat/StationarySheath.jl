@@ -32,10 +32,10 @@ julia> include("example/main.jl")
 
 If you want to develop the package, use Revise.jl:
 ```
-cd DynamicElectricSheath.jl
+cd StationarySheath.jl
 julia --project
 julia> using Revise
-julia> using DynamicElectricSheath
+julia> using StationarySheath
 ```
 
 The module is rebuilt after every change in src directory.

@@ -10,7 +10,7 @@ Compute the integral of ``f_e`` along the ion characteristic reaching ``(x_b=0,v
 Use
 ```math
     \\int_{\\tau=-\\infty}^{0} f_e(x(\\tau),v(\\tau))
-    = \\int_{z=0}^{1} \\frac{f_e(z,-\\sqrt{v_b^2 - 2*\\phi(z)})}{-\\sqrt{v_b^2 - 2*\\phi(z)}} dz
+    = \\int_{z=0}^{1} \\frac{f_e(z,-\\sqrt{v_b^2 - 2*\\phi(z)})}{\\sqrt{v_b^2 - 2*\\phi(z)}} dz
 ```
 and a trapeze integral on the points ``(z,-g_z(v_b))`` s.t. ``z\\in``meshx.
 Preallocated vectors `vi` and `toint` will be modified by the function.
