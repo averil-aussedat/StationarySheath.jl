@@ -48,7 +48,7 @@ end
 """
 $(SIGNATURES)
 
-Value of ϕ at `x`.
+Value of ``\\phi`` at `x`.
 """
 function eval_phi(phi::Phidata_poly, params::Params, x)
     return sum((phi.coeffs .* [evaluate_poly(horn, x) for horn = phi.horner])')'
@@ -57,7 +57,7 @@ end
 """
 $(SIGNATURES)
 
-Value of ϕ' at `x`.
+Value of ``\\phi'`` at `x`.
 """
 function eval_phi_dx(phi::Phidata_poly, params::Params, x)
     return sum((phi.coeffs .* [evaluate_poly(horn, x) for horn = phi.horner_dx])')'
@@ -70,7 +70,7 @@ end
 """
 $(SIGNATURES)
 
-Value of ϕ at `x`.
+Value of ``\\phi`` at `x`.
 """
 function eval_phi(phi::Phidata_grid, params::Params, x)
     # linear interpolation 
@@ -82,7 +82,7 @@ end
 """
 $(SIGNATURES)
 
-Value of ϕ' at `x`.
+Value of ``\\phi'`` at `x`.
 """
 function eval_phi_dx(phi::Phidata_grid, params::Params, x)
     # archibasic finite differences

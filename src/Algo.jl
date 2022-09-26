@@ -18,7 +18,7 @@ Preallocated vectors `vi` and `toint` will be modified by the function.
 function integral_char_xb0!(vi::Vector{Float64}, toint::Vector{Float64}, params::Params, vb::Float64, phix::Vector{Float64}, f_eb::Feb)
     get_v_char_i!(vi, vb, 0.0, phix)
     toint .= eval_fe(f_eb, params, phix, vi) ./ (-vi)
-    integral = params.meshx.step * (0.5 * (toint[1]+toint[end]) + sum(toint[2:end-1]))
+    @views integral = params.meshx.step * (0.5 * (toint[1]+toint[end]) + sum(toint[2:end-1]))
     return integral
 end
 
@@ -30,8 +30,8 @@ use of a rectangle integration scheme to avoid the equilibrium point ``(x=0,v=0)
 """
 function integral_char_00!(vi::Vector{Float64}, toint::Vector{Float64}, params::Params, phix::Vector{Float64}, f_eb::Feb)
     get_v_char_i!(vi, 0.0, 0.0, phix)
-    toint[2:end] .= eval_fe(f_eb, params, phix[2:end], vi[2:end]) ./ (-vi[2:end])
-    integral = params.meshx.step * sum(toint[2:end])
+    @views toint[2:end] .= eval_fe(f_eb, params, phix[2:end], vi[2:end]) ./ (-vi[2:end])
+    @views integral = params.meshx.step * sum(toint[2:end])
     return integral
 end
 
@@ -74,7 +74,7 @@ function compute_ne!(ne::Vector, chare::Vector{Float64}, tointe::Vector{Float64}
         chare .= LinRange(get_v_char_e(params, params.meshx.mesh[i], phix[end], 0.0), 0.0, params.Nve+1)
         eval_fe!(tointe, f_eb::Feb, params::Params, phixi, chare)
         # trapeze integral using the assumption f_eb(v)=f_eb(-v)
-        ne[i] = (chare[2]-chare[1]) * (tointe[1] + 2.0 * sum(tointe[2:end-1]) + tointe[end])
+        @views ne[i] = (chare[2]-chare[1]) * (tointe[1] + 2.0 * sum(tointe[2:end-1]) + tointe[end])
     end
 end
 
@@ -107,8 +107,9 @@ function compute_ni!(ni::Vector, chari::Vector{Float64}, vi::Vector{Float64}, vi
     # last part: the end of the characteristic is on (x>0,v=0)
     for ixb=2:params.meshx.NN+1
         integral = integral_char_vb0!(vi, toint, params, ixb, phix, phidx, f_eb)
-        ni[ixb:end] .+= (vi[ixb:end] .- vip[ixb:end]) .* (integral + integralp) # times 2 is embedded
-        integralp = integral; vip[ixb:end] .= vi[ixb:end]
+        @views ni[ixb:end] .+= (vi[ixb:end] .- vip[ixb:end]) .* (integral + integralp) # times 2 is embedded
+        integralp = integral
+        @views vip[ixb:end] .= vi[ixb:end]
     end
 
     ni .*= params.ν
@@ -148,7 +149,7 @@ Resolution by quadrature when ``\\phi`` is approximated pointwise.
 """
 function solve_Poisson!(phi::Phidata_grid, params::Params, ni::Vector{Float64}, ne::Vector{Float64})
     # trapeze integration
-    toint = params.meshx.step * 0.5 * ((ni[1:end-1] + ni[2:end]) - (ne[1:end-1] + ne[2:end]))
+    @views toint = params.meshx.step * 0.5 * ((ni[1:end-1] + ni[2:end]) - (ne[1:end-1] + ne[2:end]))
     phi.values[1] = 0.0
     phi.values[2:end] .= - cumsum(cumsum(toint)) ./ (params.λ^2)
 end
